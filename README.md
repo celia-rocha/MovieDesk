@@ -1,73 +1,74 @@
-# React + TypeScript + Vite
+<div align="center">
+  
+# 🍿 MovieDesk
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-ff2d75?style=for-the-badge)]()
 
-Currently, two official plugins are available:
+</div>
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 📖 Sobre o Projeto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+O MovieDesk é um catálogo de filmes moderno e interativo em constante desenvolvimento. O projeto tem como objetivo proporcionar uma experiência visual premium, com uma identidade que remete a uma estética cyberpunk e cores neon, consumindo dados em tempo real da API do TMDB.
 
-## Expanding the ESLint configuration
+### ✨ Destaques
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 🎨 **Design Elegante** - Interface escura clean com toques marcantes em Rosa Neon
+- 🎭 **Curadoria de Filmes** - Exibição dos filmes populares com melhor aprovação da crítica
+- 🎠 **Carousel Interativo** - Navegação suave estilo "snap scroll", inspirada em grandes plataformas de streaming
+- ⚡ **Alta Performance** - Carregamento otimizado de posters e dados via Axios
+- 💖 **Efeitos Premium** - Transições suaves (hover effects), brilho sutil (neon glow) e efeitos de vidro (glassmorphism)
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+---
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+## 🛠️ Tecnologias Utilizadas
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+<div align="center">
+
+[![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
+[![TailwindCSS](https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white)](https://tailwindcss.com/)
+[![Vite](https://img.shields.io/badge/Vite-646CFF?style=for-the-badge&logo=vite&logoColor=white)](https://vitejs.dev/)
+[![TMDB API](https://img.shields.io/badge/TMDB_API-01B4E4?style=for-the-badge&logo=themoviedb&logoColor=white)](https://developer.themoviedb.org/docs)
+
+</div>
+
+---
+
+## 🎯 Funcionalidades (Atuais)
+
+- ✅ Seção Hero otimizada com hierarquia visual clara
+- ✅ Integração e consumo da API oficial do TMDB
+- ✅ Carousel customizado de filmes sem barra de rolagem visível
+- ✅ Cards individuais de filmes com design inteligente no estado de hover
+- ✅ Filtragem automática de filmes por nota e popularidade
+
+---
+
+## 🚀 Como Executar Localmente
+
+```bash
+# Clone o repositório
+git clone https://github.com/celia-rocha/MovieDesk.git
+
+# Entre na pasta
+cd MovieDesk
+
+# Instale as dependências
+npm install
+
+# Configure sua chave da API: 
+# copie o .env.example para .env e cole o seu Token do TMDB!
+
+# Execute o projeto
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+---
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+<div align="center">
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+### 💖 Desenvolvido com Dedicação e muito café!! 
+
+</div>
