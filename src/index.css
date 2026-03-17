@@ -1,0 +1,52 @@
+@import "tailwindcss";
+
+@theme {
+  --color-dark-bg: #0d0d0d;
+  --color-dark-card: #1a1a2e;
+  --color-neon-pink: #ff2d75;
+  --color-neon-glow: rgba(255, 45, 117, 0.5);
+  --color-text-muted: #b0b0b0;
+
+  --font-poppins: "Poppins", sans-serif;
+  --font-inter: "Inter", sans-serif;
+
+  --shadow-neon: 0 0 15px rgba(255, 45, 117, 0.4);
+  --shadow-neon-strong: 0 0 25px rgba(255, 45, 117, 0.6);
+  --drop-shadow-neon: drop-shadow(0 0 8px rgba(255, 45, 117, 0.8));
+}
+
+:root {
+  background-color: var(--color-dark-bg);
+  color: white;
+  color-scheme: dark;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: var(--font-inter);
+}
+
+/* Scrollbar personalizada mais fina  */
+::-webkit-scrollbar {
+  width: 4px; /* Vertical */
+  height: 9px; /* Horizontal */
+}
+::-webkit-scrollbar-track {
+  background: transparent; /* Fundo invisível para ficar mais limpo */
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 45, 118, 0.457); /* Rosa sutil e transparente */
+  border-radius: 20px;
+  transition: background 0.3s;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-neon-pink); /* Brilha apenas no hover */
+}
+
+/* Efeito de vidro (Glassmorphism) */
+.glass {
+  background: rgba(13, 13, 13, 0.657);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid rgba(255, 45, 118, 0.468);
+}
