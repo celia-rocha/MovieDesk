@@ -2,7 +2,7 @@
   
 # 🍿 MovieDesk
 
-(https://img.shields.io/badge/Status-Em_Desenvolvimento-ff2d75?style=for-the-badge)]()
+[![Status](https://img.shields.io/badge/Status-Em_Desenvolvimento-ff2d75?style=for-the-badge)]()
 
 </div>
 
