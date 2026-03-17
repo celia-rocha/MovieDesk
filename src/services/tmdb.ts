@@ -29,6 +29,16 @@ export const movieService = {
     return data.results;
   },
 
+  // Busca de Filmes por Gênero (Passamos o código do gênero, ex: 878 para Ficção)
+  getMoviesByGenre: async (genreId: number) => {
+    const { data } = await tmdbApi.get<TMDBResponse>('/discover/movie', {
+      params: {
+        with_genres: genreId,
+      },
+    });
+    return data.results;
+  },
+
   // Busca de Filmes
   searchMovies: async (query: string) => {
     const { data } = await tmdbApi.get<TMDBResponse>('/search/movie', {
