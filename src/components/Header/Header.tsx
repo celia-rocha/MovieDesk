@@ -7,15 +7,14 @@ interface HeaderProps {
 }
 
 export function Header({ onSearch }: HeaderProps) {
-  // Memória local do Header: guarda o texto exato que o usuário está digitando na barra
+  // Estado local para controle da input de pesquisa
   const [searchQuery, setSearchQuery] = useState('');
 
-  // Função disparada quando apertamos "Enter" ou clicamos na Lupa
+  // Handle submit da barra de pesquisa
   const handleSubmit = (e: FormEvent) => {
-    e.preventDefault(); // Impede que o navegador recarregue a página inteira (comportamento padrão do HTML)
+    e.preventDefault(); 
     
-    // Se o usuário digitou algo (ignorando espaços vazios), nós usamos o nosso "telefone" (onSearch)
-    // para ligar pro App.tsx e entregar o termo pesquisado.
+    // Dispara a prop onSearch se o parâmetro não for vazio
     if (searchQuery.trim()) {
       onSearch(searchQuery.trim());
     }
@@ -23,13 +22,13 @@ export function Header({ onSearch }: HeaderProps) {
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 glass px-4 sm:px-[5%] py-3 sm:py-4 flex justify-between items-center transition-all duration-300 bg-dark-bg/80">
-      {/* Logo: "MOVIE" some em telas muito pequenas */}
+      {/* Container de Logo */}
       <div className="font-poppins text-xl sm:text-2xl font-extrabold uppercase tracking-tighter shrink-0 cursor-pointer">
         <span className="hidden min-[350px]:inline mr-1">MOVIE</span><span className="text-neon-pink shadow-neon">DESK</span>
       </div>
 
       <div className="flex-1 flex justify-end items-center gap-2 sm:gap-6 ml-2">
-        {/* Barra de Busca Flexível */}
+        {/* Componente de Busca */}
         <form 
           onSubmit={handleSubmit}
           className="relative group flex-1 max-w-[180px] sm:max-w-xs transition-all duration-400"
@@ -46,7 +45,7 @@ export function Header({ onSearch }: HeaderProps) {
           </button>
         </form>
 
-        {/* Botão de Login Adaptável */}
+        {/* Componente de Login / Perfil */}
         <button className="border border-neon-pink text-neon-pink p-1.5 sm:px-5 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-neon-pink hover:text-white hover:shadow-neon transition-all duration-400 shrink-0 cursor-pointer">
           <span className="hidden sm:inline">Login</span>
           <User size={16} className="sm:hidden" />

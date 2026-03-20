@@ -24,16 +24,19 @@ export const movieService = {
   },
 
   // Filmes Populares
-  getPopular: async () => {
-    const { data } = await tmdbApi.get<TMDBResponse>('/movie/popular');
+  getPopular: async (page: number = 1) => {
+    const { data } = await tmdbApi.get<TMDBResponse>('/movie/popular', {
+      params: { page },
+    });
     return data.results;
   },
 
-  // Busca de Filmes por Gênero (Passamos o código do gênero, ex: 878 para Ficção)
-  getMoviesByGenre: async (genreId: number) => {
+  // Busca de Filmes por Gênero (Passamos o código do gênero e a página)
+  getMoviesByGenre: async (genreId: number, page: number = 1) => {
     const { data } = await tmdbApi.get<TMDBResponse>('/discover/movie', {
       params: {
         with_genres: genreId,
+        page: page,
       },
     });
     return data.results;
