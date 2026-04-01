@@ -17,6 +17,13 @@ export interface Genre {
   name: string;
 }
 
+export interface Video {
+  key: string;
+  name: string;
+  site: string;
+  type: string;
+}
+
 export interface MovieDetails extends Movie {
   runtime: number;
   tagline: string;
@@ -24,6 +31,9 @@ export interface MovieDetails extends Movie {
   budget: number;
   revenue: number;
   status: string;
+  videos?: {
+    results: Video[];
+  };
 }
 
 export interface TMDBResponse {

@@ -1,4 +1,5 @@
 import { Star } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import type { Movie } from '../../types/movie';
 import { movieService } from '../../services/tmdb';
 
@@ -13,8 +14,13 @@ export function MovieCard({ movie }: MovieCardProps) {
   // Exibição de pontuação limitada a uma casa decimal
   const rating = movie.vote_average ? movie.vote_average.toFixed(1) : '0.0';
 
+  // Usamos agora o componente <Link> no lugar da antiga <div>
+  // A propriedade 'to' é dinâmcia e injeta a ID secreta do Filme que estamos renderizando
   return (
-    <div className="group relative bg-dark-card rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-neon-pink/30 w-[160px] sm:w-[200px] shrink-0 transition-all duration-300 hover:shadow-neon">
+    <Link 
+      to={`/movie/${movie.id}`}
+      className="group relative bg-dark-card rounded-xl overflow-hidden cursor-pointer border border-white/5 hover:border-neon-pink/30 w-[160px] sm:w-[200px] shrink-0 transition-all duration-300 hover:shadow-neon block"
+    >
       {/* Poster Wrapper */}
       <div className="aspect-[2/3] w-full overflow-hidden">
         <img 
@@ -38,7 +44,6 @@ export function MovieCard({ movie }: MovieCardProps) {
           </div>
         </div>
       </div>
-    </div>
-
+    </Link>
   );
 }

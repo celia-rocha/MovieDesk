@@ -2,28 +2,32 @@ import { useState } from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import { ArrowLeft } from 'lucide-react';
 import { Header } from './components/Header/Header';
+import { Login } from './components/Login/Login'; // Nome amigável e fácil de achar
 import { movieService } from './services/tmdb';
-import type { Movie } from './types/movie';
+import type { Movie as MovieType } from './types/movie';
 
 import { MovieCard } from './components/MovieCard/MovieCard';
 import { Home } from './pages/Home';
+import { Movie } from './pages/Movie';
+import { Profile } from './pages/Profile'; // Nova página de Perfil!
 
 function App() {
-  // Estados para gerenciamento e controle da barra de pesquisa global
-  const [searchResults, setSearchResults] = useState<Movie[]>([]);
+  // Estados de Busca Original
+  const [searchResults, setSearchResults] = useState<MovieType[]>([]);
   const [isSearching, setIsSearching] = useState(false);
   const [currentQuery, setCurrentQuery] = useState('');
+  
+  // NOVO: Estado que diz se a tela de login tá aberta (visível) ou não
+  const [isLoginModalOpen, setIsLoginModalOpen] = useState(false);
 
   // Processa a pesquisa iniciada no componente Header
   const handleSearch = async (query: string) => {
-    // Reseta o estado de pesquisa se a input estiver vazia
     if (!query || query.trim() === '') {
       setIsSearching(false);
       setSearchResults([]);
       return;
     }
     
-    // Atualiza o modo de pesquisa e executa a requisição na API
     setIsSearching(true);
     setCurrentQuery(query);
     
@@ -37,11 +41,25 @@ function App() {
 
   return (
     <Router>
-      <div className="min-h-screen bg-dark-bg text-white">
-        <Header onSearch={handleSearch} />
+      <div className="min-h-screen bg-dark-bg text-white relative">
+        {/* Passamos o abridor do login pro Header, onde fica o botão! */}
+        <Header onSearch={handleSearch} onOpenLogin={() => setIsLoginModalOpen(true)} />
+        
+        {/* Renderiza o nosso painel de login! Ele só fica visível se isOpen for true */}
+        <Login 
+          isOpen={isLoginModalOpen} 
+          onClose={() => setIsLoginModalOpen(false)} 
+        />
         
         <main className="pt-20">
           <Routes>
+            {/* Rota do Perfil */}
+            <Route path="/profile" element={<Profile />} />
+
+            {/* 1. NOSSA ROTA MÁGICA: Aqui interceptamos a URL /movie/... */}
+            <Route path="/movie/:id" element={<Movie />} />
+
+            {/* 2. ROTA NORMAL (A TELA INICIAL) */}
             <Route path="/" element={
               <div className="py-6 space-y-4">
                 {isSearching ? (

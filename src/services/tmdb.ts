@@ -50,9 +50,11 @@ export const movieService = {
     return data.results;
   },
 
-  // Detalhes de um Filme
+  // Detalhes de um Filme (E pedimos os Trailers de brinde)
   getMovieDetails: async (id: number) => {
-    const { data } = await tmdbApi.get<MovieDetails>(`/movie/${id}`);
+    const { data } = await tmdbApi.get<MovieDetails>(`/movie/${id}`, {
+      params: { append_to_response: 'videos' }
+    });
     return data;
   },
 

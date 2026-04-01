@@ -16,7 +16,7 @@ export function Home() {
         // Filtra os filmes populares retornando apenas os melhores avaliados
         const eliteMovies = popularData
           .filter(movie => movie.vote_average >= 6.0)
-          .slice(0, 12);
+          .slice(0, 12)
         
         setMovies(eliteMovies);
       } catch (error) {
@@ -30,7 +30,7 @@ export function Home() {
   return (
     <>
       {/* Seção Hero: Componentização tipográfica e visual superior */}
-      <header className="px-[5%] pt-12 pb-6 relative overflow-hidden">
+      <header className="px-[5%] pt-4 pb-6 relative overflow-hidden">
         <div className="relative z-10">
           <h1 className="text-white text-3xl sm:text-5xl font-extralight tracking-tight leading-tight">
             Explore o futuro do <br className="hidden sm:block" /> 
@@ -53,7 +53,7 @@ export function Home() {
             <MovieRow title="Filmes Populares" movies={movies} />
             
             <CategoryRow title="Ficção Científica" genreId={878} featuredMovies={movies} />
-            <CategoryRow title="Comédias" genreId={35} featuredMovies={movies} />
+            <CategoryRow title="Comédia" genreId={35} featuredMovies={movies} />
             <CategoryRow title="Romance" genreId={10749} featuredMovies={movies} />
           </>
         ) : (
