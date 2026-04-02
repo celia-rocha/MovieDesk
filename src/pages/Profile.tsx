@@ -1,10 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Settings, Heart, BookmarkPlus, CheckCircle2, Clock, Film, ArrowLeft } from 'lucide-react';
+import { Settings, Heart, BookmarkPlus, CheckCircle2, Clock, Film, ArrowLeft, LogOut } from 'lucide-react';
+import { auth } from '../services/firebase';
+import { onAuthStateChanged, signOut, type User } from 'firebase/auth';
 
 export function Profile() {
   const [activeTab, setActiveTab] = useState('favorites');
   const navigate = useNavigate();
+  
+  // Trazendo o "coração" do usuário para o Perfil
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    // Fica ouvindo ativamente: se tiver logado, pega os dados. Se não, avisa!
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe(); // Limpeza do react ao sair da página
+  }, []);
 
   return (
     <div className="container mx-auto px-4 sm:px-[5%] py-8 animate-in fade-in duration-500">
@@ -30,8 +43,19 @@ export function Profile() {
           <div className="shrink-0 relative group cursor-pointer">
             <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-full bg-gradient-to-tr from-neon-pink to-purple-600 p-[3px]">
               <div className="w-full h-full bg-dark-bg rounded-full flex items-center justify-center overflow-hidden border-4 border-dark-card">
-                {/* Aqui futuramente irá a foto do Google do usuário */}
-                <span className="text-4xl font-light text-white/50">JD</span>
+                {/* Lógica Sênior: Se tiver foto no Google, mostra a foto. Senão mostra a primeira letra do nome */}
+                {user?.photoURL ? (
+                  <img 
+                    src={user.photoURL} 
+                    alt="Foto do usuário" 
+                    className="w-full h-full object-cover" 
+                    referrerPolicy="no-referrer" 
+                  />
+                ) : (
+                  <span className="text-4xl font-light text-white/50">
+                    {user?.displayName ? user.displayName.charAt(0).toUpperCase() : 'JD'}
+                  </span>
+                )}
               </div>
             </div>
             {/* Botão de editar foto que aparece ao passar o mouse */}
@@ -42,8 +66,24 @@ export function Profile() {
 
           {/* Textos e Estatísticas */}
           <div className="flex-1 text-center sm:text-left">
-            <h1 className="text-3xl sm:text-5xl font-black text-white mb-2 tracking-tight">João Desenvolvedor</h1>
-            <p className="text-text-muted font-light mb-6">Membro desde 2026 • Cinéfilo de fim de semana</p>
+            {/* O Nome que puxa lá do Google */}
+            <h1 className="text-3xl sm:text-5xl font-black text-white mb-2 tracking-tight">
+              {user ? user.displayName : 'Cinéfilo Oculto'}
+            </h1>
+            <p className="text-text-muted font-light mb-4 sm:mb-6">
+              {user ? user.email : 'Membro desde 2026'} • Cinéfilo de fim de semana
+            </p>
+            
+            {/* Botão de Sair (Porque todo SaaS precisa deixar a pessoa ir embora!) */}
+            {user && (
+              <button 
+                onClick={() => signOut(auth)}
+                className="flex items-center gap-2 text-xs uppercase tracking-widest text-white/40 hover:text-neon-pink transition-colors mx-auto sm:mx-0 mb-6 bg-white/5 px-4 py-2 rounded-full border border-white/5 hover:border-neon-pink/30 cursor-pointer"
+              >
+                <LogOut size={14} />
+                Desconectar
+              </button>
+            )}
 
             {/* Barrinha de Estatísticas Rápidas */}
             <div className="flex flex-wrap justify-center sm:justify-start gap-4 sm:gap-8">
@@ -51,14 +91,14 @@ export function Profile() {
                  <Film className="text-neon-pink" size={20} />
                  <div className="text-left">
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">Assistidos</p>
-                    <p className="text-lg font-bold text-white leading-none mt-1">124</p>
+                    <p className="text-lg font-bold text-white leading-none mt-1">0</p>
                  </div>
                </div>
                <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-xl border border-white/5">
                  <Clock className="text-purple-400" size={20} />
                  <div className="text-left">
                     <p className="text-[10px] text-white/40 uppercase tracking-widest font-semibold">Tempo de Tela</p>
-                    <p className="text-lg font-bold text-white leading-none mt-1">280h</p>
+                    <p className="text-lg font-bold text-white leading-none mt-1">0h</p>
                  </div>
                </div>
             </div>

@@ -54,8 +54,9 @@ export function Movie() {
   }
 
   // Criando Links de Imagem
-  const backdropUrl = movieService.getImageUrl(movie.backdrop_path, 'original');
-  const posterUrl = movieService.getImageUrl(movie.poster_path, 'w500');
+  // Performance Sênior da Célia: NUNCA carregamos "original" 8K para web. Puxamos tamanhos otimizados para garantir o tempo de tela rápido.
+  const backdropUrl = movieService.getImageUrl(movie.backdrop_path, 'w1280'); // Fundo principal da tela, max 1280px.
+  const posterUrl = movieService.getImageUrl(movie.poster_path, 'w342'); // Poster de capa, max 342px.
   
   // Detetive do Trailer: Acha qual o vídeo oficial é o Trailer do YouTube!
   const trailer = movie.videos?.results.find(

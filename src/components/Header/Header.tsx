@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import type { FormEvent } from 'react';
 import { User, Search } from 'lucide-react';
 import { Link } from 'react-router-dom';
+
+// Importando Firebase Auth
+import { auth } from '../../services/firebase';
+import { onAuthStateChanged, type User as FirebaseUser } from 'firebase/auth';
 
 interface HeaderProps {
   onSearch: (query: string) => void;
@@ -11,6 +15,17 @@ interface HeaderProps {
 export function Header({ onSearch, onOpenLogin }: HeaderProps) {
   // Estado local para controle da input de pesquisa
   const [searchQuery, setSearchQuery] = useState('');
+  
+  // Estado que descobre se existe alguém logado no Google
+  const [user, setUser] = useState<FirebaseUser | null>(null);
+
+  useEffect(() => {
+    // Escutamos o Firebase silenciosamente em todas as páginas!
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   // Handle submit da barra de pesquisa
   const handleSubmit = (e: FormEvent) => {
@@ -49,23 +64,29 @@ export function Header({ onSearch, onOpenLogin }: HeaderProps) {
 
         {/* --- LINKS E BOTÕES DA DIREITA --- */}
 
-        {/* Botão de Perfil do Usuário */}
-        <Link 
-          to="/profile"
-          className="group border border-neon-pink text-neon-pink p-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-neon-pink hover:text-white hover:shadow-neon transition-all duration-400 shrink-0 flex items-center gap-2"
-        >
-          <User size={16} className="text-neon-pink group-hover:text-white transition-colors" />
-          <span className="hidden sm:inline">Perfil</span>
-        </Link>
-
-        {/* Componente de Login */}
-        <button 
-          onClick={onOpenLogin}
-          className="border border-neon-pink text-neon-pink p-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-neon-pink hover:text-white hover:shadow-neon transition-all duration-400 shrink-0 cursor-pointer"
-        >
-          <span className="hidden sm:inline z-10">Login</span>
-          <User size={16} className="sm:hidden" />
-        </button>
+        {user ? (
+          <Link 
+            to="/profile"
+            className="group border border-neon-pink text-neon-pink p-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-neon-pink hover:text-white hover:shadow-neon transition-all duration-400 shrink-0 flex items-center gap-2"
+          >
+            {user.photoURL ? (
+              <img src={user.photoURL} alt="Foto Perfil" className="w-5 h-5 rounded-full object-cover" referrerPolicy="no-referrer" />
+            ) : (
+              <User size={16} className="text-neon-pink group-hover:text-white transition-colors" />
+            )}
+            <span className="hidden sm:inline">
+              {user.displayName ? user.displayName.split(' ')[0] : 'Perfil'}
+            </span>
+          </Link>
+        ) : (
+          <button 
+            onClick={onOpenLogin}
+            className="border border-neon-pink text-neon-pink p-1.5 sm:px-4 sm:py-2 rounded-lg font-semibold text-[10px] sm:text-xs uppercase tracking-widest hover:bg-neon-pink hover:text-white hover:shadow-neon transition-all duration-400 shrink-0 cursor-pointer"
+          >
+            <span className="hidden sm:inline z-10">Login</span>
+            <User size={16} className="sm:hidden" />
+          </button>
+        )}
       </div>
     </header>
   );

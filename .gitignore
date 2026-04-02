@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Pastas Particulares da Célia (Mentorias e Anotações)
+docs/
+
+# Arquivos de Segredo de Ambiente
+.env
+.env.local
+.env.*.local
